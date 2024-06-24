@@ -1,151 +1,139 @@
-
-//HAGO UNA FUNCIÓN
-//HAGO UNA PROMESA QUE DEBA RETORNAR ESA FUCNIÓN
-//HAGO LA OTRA FUNCIÓN
-//HAGO UNA PROMESA QUE DEBA ESPERAR A QUE SE REALICE LA PRIMERA FUNCIÓN 
-
-
-let totalAmount = []; 
-function mainDishOffer () {
-
-alert("Welcome to the Bottega Diner!");
-
-const mains = [
-    { name: "Pizza", Price: 10 },
-    { name: "Hamburger", Price: 8 },
-    { name: "Pasta", Price: 15 },
-    { name: "Lasagna", Price: 9 },
-    { name: "Vegetable Mix", Price: 12 },
-]
-
-var i = 0;
-
-function hola () {
-  while (i < mains.length) {
-    console.log(mains[i].name);
-    i++;
-  }
-}
-
-
-hola();
-
-async function f() {
-
-  let promise = new Promise((resolve, reject) => {
-    setTimeout(() => resolve(hola()), 1000)
-  });
-
-  let result = await promise; 
-  let mainChoice = prompt("Please, select a dish from the Main Menu");
-    
-if (mainChoice.toLowerCase() === "pizza") {
-  alert("Wow! I'm a Pizza lover too!");
-  totalAmount.push(10);
-} else if (mainChoice.toLowerCase() === "hamburger") {
-  alert("Gutten elektionen Frauline!!");
-  totalAmount.push(8);
-} else if (mainChoice.toLowerCase() === "pasta") {
-  alert("Ohhh Italian food... ");
-  totalAmount.push(15);
-} else if (mainChoice.toLowerCase() === "lasagna") {
-  alert("Uhhmmm are you sure you are ready, Sir??"); 
-  totalAmount.push(9);
-} else if (mainChoice.toLowerCase() === "vegetable mix") {
-  alert("Okayy, marchando una Operación bikini!!");
-  totalAmount.push(12);
-} else {
-  //ENCONTRAR LA MANERA DE QUE SI NO ESCOGEN UN ITEM DEL MENÚ SE VUEKVA A MANDAR EL EMNSAJE UNA Y OTRA VEZ
-  let mainChoice = prompt("Please, select a  dish from the Main Menu");
-}
-
-console.log(`That would be ${totalAmount[0]} Euros!`);
-
-}
-
-f();
-}
-
-
-//sides
-
-function sideDishOffer () {
-
-  alert("These are our sides, please pick two:");
-  
-  const sides = [
-    { name: "Ham and Cheese", Price: 4 },
-    { name: "Lettuce flower", Price: 5 },
-    { name: "Mouse bites", Price: 7 },
-    { name: "Cucumber Puré", Price: 3 },
-]
-  
-  var i = 0;
-  
-  function hola () {
-    while (i < sides.length) {
-      console.log(sides[i].name);
-      i++;
+class menuDinerBottega {
+    constructor () {
+        this.menus = {
+            breakfast: {
+                starters: [
+                    { name: "Fruit mix", price: 4},
+                    { name: "Chocolate", price: 4},
+                    { name: "Gelato mix", price: 4}
+                ],
+                mains: [
+                    { name: "Bacon & Eggs", price: 4},
+                    { name: "Sweets", price: 4},
+                    { name: "Biscuit", price: 4}
+                ],
+                drinks: [
+                    { name: "Coffee", price: 4},
+                    { name: "Milk", price: 4},
+                    { name: "Tea", price: 4}
+                ]
+            },
+            lunch: {
+                starters: [
+                    { name: "Ham and Cheese", price: 4},
+                    { name: "Bread ", price: 4},
+                    { name: "Butter", price: 4}
+                ],
+                mains: [
+                    { name: "Bistec", price: 4},
+                    { name: "Mash potatoes", price: 4},
+                    { name: "Lasagna", price: 4}
+                ],
+                drinks: [
+                    { name: "Aperol", price: 4},
+                    { name: "Coffe", price: 4},
+                    { name: "Beer", price: 4}
+                ]
+            },
+            dinner:{
+                starters: [
+                    { name: "Dry fruits", price: 4},
+                    { name: "Bread", price: 4},
+                    { name: "Coconut", price: 4}
+                ],
+                mains: [
+                    { name: "Pizza", price: 4},
+                    { name: "Pasta", price: 4},
+                    { name: "Lasagna", price: 4}
+                ],
+                drinks: [
+                    { name: "Aperol", price: 4},
+                    { name: "Beer", price: 4},
+                    { name: "Cocktails", price: 4}
+                ]
+            },
+        
+        };
+        this.comments = [
+            "Well well... somebody knows a thing or two!!",
+            "I would do the same Sir!",
+            "Please!! it is a good choice",
+            "I think you choose the best!",
+            "Let me ask in the kitchen butI think it is fine"
+        ];
     }
-  }
-  
-  
-  hola();
 
-  
-  async function f() {
-  
-    let promise = new Promise((resolve, reject) => {
-      setTimeout(() => resolve(hola()), 1000)
-    });
-  
-    let result = await promise; 
-    let sideChoice1 = prompt("Please, select Dish 1:");
-      
-  if (sideChoice1.toLowerCase() === "ham and cheese") {
-    alert("Wow! It is gonna be interesting...!");
-    totalAmount.push(4);
-  } else if (sideChoice1.toLowerCase() === "lettuce flower") {
-    alert("Eating healthy... I see...");
-    totalAmount.push(5);
-  } else if (sideChoice1.toLowerCase() === "mouse bites") {
-    alert("The best option Sir!... ");
-    totalAmount.push(7);
-  } else if (sideChoice1.toLowerCase() === "cucumber puré") {
-    alert("Idon't know if we have any left..."); 
-    totalAmount.push(3);
-  } else {
-    //ENCONTRAR LA MANERA DE QUE SI NO ESCOGEN UN ITEM DEL MENÚ SE VUEKVA A MANDAR EL EMNSAJE UNA Y OTRA VEZ
-    let mainChoice = prompt("Please, select a  dish from the Main Menu");
-  }
-  
-  console.log(`That would be ${totalAmount[0] + totalAmount[1] + totalAmount[2]} Euros!`);
-  
-  }
-  
-  f();
+//QUÉ MENÚ ESCOGERÁ SEGÚN LA HORA 
+    getMenuType(hora) {
+        if (hora >= 8 && hora < 13) return "breakfast";
+        else if (hora >= 13 && hora < 18) return "lunch";
+        else if (hora >= 18 && hora < 23) return "dinner";
+        else return "closed"
+    }
+
+    //
+    printMenu(tipoMenu) {
+        const menu = this.menus[tipoMenu];
+        let menuString = `${tipoMenu.chartAt(0).toUpperCase() + tipoMenu.slice(1)} Menu. \n\Starters:\n`;
+        menu.starters.forEach(item => {
+            menuString += `${item.name}: ${item.price}€\n`;
+        });
+        menuString += `\nMains:\n`;
+        menu.mains.forEach(item => {
+            menuString += `${item.name}: ${item.price}€\n`;
+        });
+        menuString += `\nDesserts:\n`;
+        menu.mains.forEach(item => {
+            menuString += `${item.name}: ${item.price}€\n`;
+        });
+
+        alert(menuString);
+    }
+
+    selections(menu, category){
+        let item = null;
+        while (!item) {
+            let selectionPrompt = `Please select a ${category.slice(0, -1)}`
+            menu[category].forEach( item => {
+                selectionPrompt += `${item.name} (${item.price})`
+            });
+            const selection = prompt(selectionPrompt);
+            item = menu[category].find(item => item.name.toLowerCase())
+            if (item) {
+                const comment = this.comments[Math.random()];
+                alert(`You selected ${item.name}. ${comment}. It costs ${item.price}`)
+            } else {
+                alert("Item not found. Please choose a valid item")
+            }
+        }
+        return item;
+    }
+
+    getOrder(hora) {
+        const tipoMenu = this.getMenuType(hora);
+        if (tipoMenu === "closed") {
+            alert("Sorry we are closed")
+            return;
+        } else if (tipoMenu === "breakfast") {
+            showMenu(breakfast);
+        } else if (tipoMenu === "lunch") {
+            showMenu(lunch);
+        } else if (tipoMenu === "dinner") {
+            showMenu(dinner);
+        } 
+    }
+
+
+    greeting() {
+        let hora = prompt("Porfavor seleccione una hora");
+      let holaaaa = this.menus.breakfast;
+      console.log(holaaaa);
+    }
+
 }
-  
 
 
-const showMain = () => {
-  return new Promise((resolve, reject) => {
-      resolve(mainDishOffer());
-  });
-}
 
-const showSide = () => {
-  return new Promise((resolve, reject) => {
-      resolve(sideDishOffer());
-  });
-}
+const skj = new menuDinerBottega();
 
-async function showMenu() {
-  const mainDish = await showMain();
-  mainDish();
-
-  const sideDish = await showSide();
-  sideDish();
-}
-
-showMenu();
+skj.greeting();
