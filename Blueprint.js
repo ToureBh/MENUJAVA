@@ -74,7 +74,7 @@ class menuDinerBottega {
     //
     printMenu(tipoMenu) {
         const menu = this.menus[tipoMenu];
-        let menuString = `${tipoMenu.chartAt(0).toUpperCase() + tipoMenu.slice(1)} Menu. \n\Starters:\n`;
+        let menuString = `${tipoMenu.charAt(0).toUpperCase() + tipoMenu.slice(1)} Menu. \n\Starters:\n`;
         menu.starters.forEach(item => {
             menuString += `${item.name}: ${item.price}€\n`;
         });
@@ -111,23 +111,17 @@ class menuDinerBottega {
 
     getOrder(hora) {
         const tipoMenu = this.getMenuType(hora);
-        if (tipoMenu === "closed") {
-            alert("Sorry we are closed")
+        if (tipoMenu === 'closed') {
+            alert("Sorry, the restaurant is closed.");
             return;
-        } else if (tipoMenu === "breakfast") {
-            showMenu(breakfast);
-        } else if (tipoMenu === "lunch") {
-            showMenu(lunch);
-        } else if (tipoMenu === "dinner") {
-            showMenu(dinner);
-        } 
-    }
+        } else {
+             this.printMenu(tipoMenu);
+       }
+}
 
 
     greeting() {
-        let hora = prompt("Porfavor seleccione una hora");
-      let holaaaa = this.menus.breakfast;
-      console.log(holaaaa);
+        var hora = prompt("Porfavor seleccione una hora");
     }
 
 }
@@ -136,4 +130,8 @@ class menuDinerBottega {
 
 const skj = new menuDinerBottega();
 
+skj.getMenuType();
+skj.printMenu();
+skj.selections();
+skj.getOrder();
 skj.greeting();
