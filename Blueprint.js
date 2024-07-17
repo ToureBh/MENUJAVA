@@ -63,7 +63,8 @@ class menuDinerBottega {
         ];
     }
 
-//QUÉ MENÚ ESCOGERÁ SEGÚN LA HORA 
+
+    // Función para determinar el momento de la comida basado en la hora ingresada
     getMenuType(hora) {
         if (hora >= 8 && hora < 13) return "breakfast";
         else if (hora >= 13 && hora < 18) return "lunch";
@@ -71,7 +72,23 @@ class menuDinerBottega {
         else return "closed"
     }
 
-    //
+    // Función para seleccionar un comentario aleatorio
+    obtenerComentarioAleatorio(comments) {
+    const indice = Math.floor(Math.random() * comments.length);
+    return comments[indice];
+    }
+
+    getOrder(hora) {
+        const tipoMenu = this.getMenuType(hora);
+        if (tipoMenu === 'closed') {
+            alert("Sorry, the restaurant is closed.");
+            return;
+        } else {
+            this.printMenu(tipoMenu);
+        }
+    }
+
+    // Función para mostrar el menú completo y permitir la selección
     printMenu(tipoMenu) {
         const menu = this.menus[tipoMenu];
         let menuString = `${tipoMenu.charAt(0).toUpperCase() + tipoMenu.slice(1)} Menu. \n\Starters:\n`;
@@ -109,29 +126,43 @@ class menuDinerBottega {
         return item;
     }
 
-    getOrder(hora) {
-        const tipoMenu = this.getMenuType(hora);
-        if (tipoMenu === 'closed') {
-            alert("Sorry, the restaurant is closed.");
+    // Función principal para ejecutar el menú
+    ejecutarMenu() {
+    let momentoComida = null;
+    while (!momentoComida) {
+        const horaSeleccionada = prompt("Bienvenido a Bottega fast Food, horario atencion 8am a 23pm, Ingresa la hora (HH) para seleccionar tu comida:");
+        if (horaSeleccionada === null) {
+            alert("Proceso cancelado.");
             return;
-        } else {
-             this.printMenu(tipoMenu);
-       }
-}
+        }
+        momentoComida = this.getMenuType(horaSeleccionada);
+        if (!momentoComida) {
+            alert("Hora no válida. Por favor, ingresa una hora dentro de las franjas horarias permitidas.");
+            }
+        }
+
+        // Selección de plato principal
+        const platoStarters = this.printMenu(this.menus[tipoMenu].starters, 'starter', momentoComida);
+        if (!platoStarters) return;  // Si el usuario cancela
 
 
-    greeting() {
-        var hora = prompt("Porfavor seleccione una hora");
+        // Selección de guarniciones
+        const platoMain = this.printMenu(this.menus[tipoMenu].mains, 'plato principal', momentoComida);
+        if (!platoMain) return;  // Si el usuario cancela
+
+
+        const opcionDrinks = this.printMenu(this.menus[tipoMenu].drinks, 'bebida', momentoComida);
+        if (!opcionDrinks) return;  // Si el usuario cancela
+
+
+        // Sumar el costo total
+        const costoTotal = platoStarters.price + platoMain.price + opcionDrinks.price;
+        alert(`Bottega Fast Food\n\nRecibo venta\n${platoStarters.name} = €${platoStarters.price}\n${platoMain.name} = €${platoMain.price}\n${opcionDrinks.name} = €${opcionDrinks.price} \n\nCosto total: €${costoTotal.toFixed(2)}\nGracias por Visitarnos`);
     }
 
-}
+};
 
 
+skj = new menuDinerBottega;
 
-const skj = new menuDinerBottega();
-
-skj.getMenuType();
-skj.printMenu();
-skj.selections();
-skj.getOrder();
-skj.greeting();
+skj.ejecutarMenu();
